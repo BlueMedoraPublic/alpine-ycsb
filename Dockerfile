@@ -1,4 +1,4 @@
-FROM rijalati/alpine-zulu-jdk8:latest-mini
+FROM bmedora/alpine-zulu-jdk8:latest-mini
 MAINTAINER engops@bluemedora.com
 
 ENV YCSB_VERSION=0.17.0-SNAPSHOT \
