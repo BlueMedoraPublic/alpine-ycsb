@@ -34,6 +34,15 @@ if [[ -z ${DBTYPE} || -z ${WORKLETTER} || -z ${DBARGS} ]]; then
   echo "Missing params! Exiting"
   exit 1
 else
+  # Add to support mongo ssl
+  # Mount ca.pem to /etc/ssl/
+  if [[ ${DBTYPE} == 'mongodb' || ${DBTYPE} == 'mongodb-async' ]]; then
+    if [[ $DBARGS =~ "ssl=true" ]]; then
+      keytool -import -alias cacert -storepass changeit \
+      -keystore /opt/jdk/zulu-jdk8/jre/lib/security/cacerts -file /etc/ssl/ca.pem
+    fi
+  fi
+
   config_workloads
   if [[ ! -z "${ACTION}" ]]; then
     eval ./bin/ycsb "${ACTION}" "${DBTYPE}" -s -P "workloads/workload${WORKLETTER}" "${DBARGS}"
