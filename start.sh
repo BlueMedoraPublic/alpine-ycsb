@@ -6,9 +6,9 @@ set -vex
 function config_workloads
 {
     sed -i "s/recordcount=[0-9]*/recordcount=${RECNUM:=1000000}/g" \
-        /opt/ycsb-*/workloads/workload*
+        /opt/YCSB-*/workloads/workload*
     sed -i "s/operationcount=[0-9]*/operationcount=${OPNUM:=5000000}/g" \
-        /opt/ycsb-*/workloads/workload*
+        /opt/YCSB-*/workloads/workload*
         
     return
 }
@@ -17,7 +17,7 @@ function load_data
 {
     if [[ ! -e /.loaded_data ]]; then
 
-        /opt/ycsb-*/bin/ycsb.sh load "${DBTYPE}" -s -P "workloads/workload${WORKLETTER}" "${DBARGS}" && touch /.loaded_data
+        /opt/YCSB-*/bin/ycsb.sh load "${DBTYPE}" -s -P "workloads/workload${WORKLETTER}" "${DBARGS}" && touch /.loaded_data
     fi
 
     return
@@ -37,9 +37,9 @@ else
   # Add to support mongo ssl
   # Mount ca.pem to /etc/ssl/
   if [[ ${DBTYPE} == 'mongodb' || ${DBTYPE} == 'mongodb-async' ]]; then
-    if [[ $DBARGS =~ "ssl=true" ]]; then
+    if [[ $DBARGS == *"ssl=true"* ]]; then
       keytool -import -alias cacert -storepass changeit \
-      -keystore /opt/jdk/zulu-jdk8/jre/lib/security/cacerts -file /etc/ssl/ca.pem
+      -keystore /opt/jdk/zulu-jdk8/jre/lib/security/cacerts -file /etc/ssl/ca.pem -noprompt
     fi
   fi
 
