@@ -1,5 +1,5 @@
 # Deprecated
-Updated to https://github.com/BlueMedora/docker-ycsb which uses `maven:3.6.1-jdk-8-slim` base image
+Updated to https://github.com/BlueMedoraPublic/docker-ycsb which uses the `maven:3.6.1-jdk-8-slim` base image
 
 # alpine-ycsb
 YCSB running on Alpine Linux and Zulu JDK
